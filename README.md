@@ -1,7 +1,7 @@
 
 ## Description
 
-Constrole de estoque backend - NestJS
+Controle de estoque backend - NestJS
 ## Installation
 
 ```bash
