@@ -13,10 +13,3 @@ export const mongoose = {
     useUnifiedTopology: true
   }
 };
-
-export const environment = 'development'; 
-
-export const url = {
-  clientBaseUrl: 'http://localhost:4040/#',
-  apiBaseUrl: 'http://localhost:3000/api'
-}; 

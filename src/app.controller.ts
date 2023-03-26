@@ -2,16 +2,18 @@ import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { HasRoles } from './auth/has-roles.decorator';
 import { Role } from './model/role.enum';
-import { RolesGuard } from './auth/roles.guard';
-import { LocalAuthGuard } from './auth/local-auth.guard';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { RolesGuard } from './auth/guards/roles.guard';
+import { LocalAuthGuard } from './auth/guards/local-auth.guard';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller()
+@ApiTags('Api')
+@Controller('api')
 export class AppController {
-  constructor(private authService: AuthService) {}
-
+  constructor(private readonly authService: AuthService) {}
+  
   @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
+  @Post('login')
   async login(@Request() req) {
     return this.authService.login(req.user);
   }
