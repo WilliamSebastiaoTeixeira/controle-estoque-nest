@@ -1,9 +1,11 @@
+import { ThrottlerModule } from '@nestjs/throttler';
+import { MongooseModule } from '@nestjs/mongoose';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { ThrottlerModule } from '@nestjs/throttler';
+
+import { mongoose } from './environment/constants'; 
 
 @Module({
   imports: [
@@ -12,9 +14,11 @@ import { ThrottlerModule } from '@nestjs/throttler';
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 10,
+    }), 
+    MongooseModule.forRoot(mongoose.uri, {
+      dbName: mongoose.dbName
     })
   ],
   controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

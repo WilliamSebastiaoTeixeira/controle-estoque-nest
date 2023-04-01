@@ -3,13 +3,6 @@ export const jwtConstants = {
 }; 
 
 export const mongoose = {
-  url: 'mongodb://********/controleEstoque',
-  connectionOptions: {
-    user: '****',
-    pass: '****',
-    authSource: 'admin',
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
+  uri:'mongodb://<usuario>:<senha>@localhost:27017', 
+  dbName: '<nome do banco>'
 };
