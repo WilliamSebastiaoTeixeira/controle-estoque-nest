@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose'; 
 import * as bcrypt from 'bcrypt';
@@ -11,14 +11,20 @@ export class UsersService {
 
   async createUser(userName: string, password: string, nome: string) {
     const saltOrRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltOrRounds);
+    const hashedPassword = await bcrypt.hash(password, saltOrRounds)
+
+    const userExists = await this.findUserByUsername(userName)
+    if(userExists){
+      throw new UnauthorizedException('Já existe um usuário com este email!')
+    }
+
     const newUser = new this.userModel({
       username: userName.toLowerCase(),
       password: hashedPassword,
       nome: nome,
       deleted: false
-    });
-    await newUser.save();
+    })
+    await newUser.save()
     return {
       message: 'Usuario criado com sucesso!'
     };
@@ -36,6 +42,11 @@ export class UsersService {
       }
     }
 
+    const userExists = await this.findUserByUsername(userName)
+    if(userExists){
+      throw new UnauthorizedException('Já existe um usuário com este email!')
+    }
+
     const updatedUser = await this.userModel.findByIdAndUpdate(_id, {
       username: userName, 
       nome: nome,
@@ -47,10 +58,9 @@ export class UsersService {
     };
   }
 
-
   async findUserByUsername(userName: string){
     const username = userName.toLowerCase();
-    const user = await this.userModel.findOne({ username });
+    const user = await this.userModel.findOne({ username, deleted: false });
     return user;
   }  
 
