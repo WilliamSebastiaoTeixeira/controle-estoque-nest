@@ -12,7 +12,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.administrar)
+  @Roles(Role.ADMINISTRAR)
   @Post('/create')
   async createUser(
     @Body('senha') password: string,
@@ -25,7 +25,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.administrar)
+  @Roles(Role.ADMINISTRAR)
   @Post('/update')
   async updateUser(
     @Body('_id') _id: string,
@@ -39,7 +39,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.administrar, Role.meuPerfil)
+  @Roles(Role.ADMINISTRAR, Role.MEU_PERFIL)
   @Post('/update-meu-perfil')
   async updateMyUser(
     @Request() req,
@@ -52,7 +52,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.administrar)
+  @Roles(Role.ADMINISTRAR)
   @Post('/update-meu-perfil-permissoes')
   async updateMyUserPermission(
     @Request() req,
@@ -63,7 +63,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.administrar)
+  @Roles(Role.ADMINISTRAR)
   @Post('/delete')
   async fakeDelete(
     @Body('_id') _id: string,
@@ -73,7 +73,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.administrar)
+  @Roles(Role.ADMINISTRAR)
   @Get('list')
   async listUsers(@Request() req){
     const result = await this.usersService.listUsers(req.user.userId)
@@ -81,7 +81,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.administrar)
+  @Roles(Role.ADMINISTRAR)
   @Get('roles')
   async listRoles(){
     const result = await this.usersService.listRoles()

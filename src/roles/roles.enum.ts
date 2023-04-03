@@ -1,6 +1,6 @@
 export enum Role {
-  meuPerfil = 'Meu perfil',
-  administrar = 'Administrador',
-  solicitar = 'Solicitante',
-  produtos = 'Produtos',
+  MEU_PERFIL = 'MEU_PERFIL',
+  ADMINISTRAR = 'ADMINISTRADOR',
+  SOLICITAR = 'SOLICITANTE',
+  PRODUTOS = 'PRODUTOS',
 }
