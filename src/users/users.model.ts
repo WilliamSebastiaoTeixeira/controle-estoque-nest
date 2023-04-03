@@ -14,6 +14,10 @@ export const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    permissoes: {
+      type: Array,
+      required: true,
+    },
     deleted: {
       type: Boolean, 
       required: true
@@ -27,5 +31,6 @@ export interface User extends mongoose.Document {
   nome: string;
   deleted: boolean;
   username: string;
+  permissoes: string[];
   password: string;
 }
