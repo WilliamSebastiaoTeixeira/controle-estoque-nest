@@ -4,7 +4,7 @@ import { Model } from 'mongoose'
 import * as bcrypt from 'bcrypt'
 
 import { User } from './users.model'
-import { Role } from './../roles/roles.enum'
+import { Role, RoleLabel } from './../roles/roles.enum'
 @Injectable()
 export class UsersService {
 
@@ -133,7 +133,12 @@ export class UsersService {
   }
 
   async listRoles(){
-    return Object.values(Role)
+    return Object.values(Role).map((role: string) => {
+      return {
+        value: role,
+        label: RoleLabel[role]
+      }
+    })
   }
 
   async fakeDeleteUserById(_id: string){

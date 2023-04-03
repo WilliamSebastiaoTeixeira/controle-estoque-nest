@@ -82,7 +82,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMINISTRAR)
-  @Get('roles')
+  @Get('permissoes')
   async listRoles(){
     const result = await this.usersService.listRoles()
     return result
