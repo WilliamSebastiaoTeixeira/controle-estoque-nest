@@ -39,7 +39,17 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMINISTRAR, Role.MEU_PERFIL)
+  @Roles(Role.MEU_PERFIL)
+  @Get('/get-meu-perfil')
+  async getMyUser(
+    @Request() req,
+  ) {
+    const result = await this.usersService.getMyUser(req.user.userId)
+    return result
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.MEU_PERFIL)
   @Post('/update-meu-perfil')
   async updateMyUser(
     @Request() req,

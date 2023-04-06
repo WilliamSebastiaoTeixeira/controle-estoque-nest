@@ -59,6 +59,16 @@ export class UsersService {
     };
   }
 
+  async getMyUser(_id: string){
+    const user = await this.userModel.findById(_id)
+    return {
+      _id: user.id,
+      email: user.username, 
+      nome: user.nome,
+      permissoes: user.permissoes
+    }
+  }
+
   async updateMyUserPermission(_id: string, permissoes: string[]) {
     const updatedUser = await this.userModel.findByIdAndUpdate(_id, {
       permissoes: permissoes, 
