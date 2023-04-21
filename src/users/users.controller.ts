@@ -39,7 +39,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.MEU_PERFIL)
+  @Roles(Role.MEU_PERFIL, Role.ADMINISTRAR)
   @Get('/get-meu-perfil')
   async getMyUser(
     @Request() req,
