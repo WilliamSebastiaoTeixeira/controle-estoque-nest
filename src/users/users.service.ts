@@ -129,7 +129,7 @@ export class UsersService {
   }
 
   async listUsers(_id: string){
-    const users = await this.userModel.find({})
+    const users = await this.userModel.find({}).sort({createdAt: -1})
     
     const usersMapped = users.map((user: User) => {
       if(!user.deleted) return {
