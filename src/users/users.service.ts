@@ -108,6 +108,11 @@ export class UsersService {
     };
   }
 
+  async findUserById(_id: string){
+    const user = await this.userModel.findById(_id)
+    return user
+  }
+
   async findUserByUsername(userName: string){
     const username = userName.toLowerCase()
     const user = await this.userModel.findOne({ username, deleted: false })

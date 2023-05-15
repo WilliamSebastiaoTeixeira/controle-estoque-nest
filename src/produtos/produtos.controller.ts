@@ -51,4 +51,25 @@ export class ProdutosController {
     const result = await this.produtosService.listProdutos()
     return result
   }
+
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.PRODUTOS, Role.ENTRADA_SAIDA)
+  @Post('/list-by-param')
+  async listWithParam(
+    @Body('param') param: string,
+  ) {
+    const result = await this.produtosService.listProdutosByParam(param)
+    return result
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.PRODUTOS, Role.ENTRADA_SAIDA)
+  @Post('/find-by-id')
+  async findById(
+    @Body('_id') _id: string,
+  ) {
+    const result = await this.produtosService.findNaoDeletadoByIdFormated(_id)
+    return result
+  }
 }

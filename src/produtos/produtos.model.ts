@@ -10,6 +10,10 @@ export const ProdutoSchema = new mongoose.Schema(
       type: String,
       default: () => undefined
     },
+    qtdUnidades: {
+      type: Number, 
+      default: () => 0
+    },
     deleted: {
       type: Boolean,
       required: true,
@@ -22,5 +26,6 @@ export interface Produto extends mongoose.Document {
   _id: string;
   nome: string;
   descricao: string;
+  qtdUnidades: number; 
   deleted: boolean;
 }
