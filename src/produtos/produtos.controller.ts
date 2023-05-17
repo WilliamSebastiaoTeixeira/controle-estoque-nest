@@ -1,4 +1,4 @@
-import  { Body, Controller, Post, Get, UseGuards, Query }  from '@nestjs/common'
+import  { Body, Controller, Post, Get, UseGuards, Query, Request }  from '@nestjs/common'
 
 import { ProdutosService } from './produtos.service'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
@@ -60,8 +60,9 @@ export class ProdutosController {
   @Post('/list-by-param')
   async listWithParam(
     @Body('param') param: string,
+    @Request() req,
   ) {
-    const result = await this.produtosService.listProdutosByParam(param)
+    const result = await this.produtosService.listProdutosByParam(param, req.user.userId)
     return result
   }
 

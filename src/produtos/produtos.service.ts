@@ -3,11 +3,16 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 
 import { Produto } from './produtos.model'
+
+import { UsersService } from 'src/users/users.service'
+
 @Injectable()
 export class ProdutosService {
 
   constructor(
-    @InjectModel('produto') private readonly produtoModel: Model<Produto>,
+    @InjectModel('produto') 
+    private readonly produtoModel: Model<Produto>,
+    private readonly usersService: UsersService,
   ) {}
 
   async createProduto(nome: string, descricao: string, subModulo?: string) {
@@ -84,21 +89,31 @@ export class ProdutosService {
     return produtosMapped
   }
 
-  async listProdutosByParam(param: string){
+  async listProdutosByParam(param: string, usuarioId: string){
     if(!param) return []
-
     const regex = new RegExp(param, 'i')
-
-    const or = {
+    const rules = {
       $or:[ 
         {nome: {$regex: regex}},
-        {descricao: {$regex: regex}}
-      ]
+        {descricao: {$regex: regex}},
+      ],
     }
 
-    const produtos = await this.produtoModel.find(or).sort({createdAt: -1})
+    const produtos = await this.produtoModel.find(rules).sort({createdAt: -1})
+    if(!produtos.length) return []
 
-    const produtosMapped = produtos.map((produto: Produto) => {
+    const user = await this.usersService.findUserById(usuarioId)
+
+    const userPermission = user.permissoes.filter((permissao) => {
+      return permissao === 'APH' || 
+             permissao === 'LIMPEZA'
+    })
+
+    const produtosMapped = produtos
+      .filter((produto) => {
+        return userPermission.includes(produto.subModulo)
+      })
+      .map((produto) => {
       if(!produto.deleted) return {
         _id: produto._id,
         nome: produto.nome,
