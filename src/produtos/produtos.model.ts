@@ -17,6 +17,10 @@ export const ProdutoSchema = new mongoose.Schema(
     deleted: {
       type: Boolean,
       required: true,
+    },
+    subModulo: {
+      type: String,
+      default: () => undefined
     }
   },
   { timestamps: true }
@@ -28,4 +32,5 @@ export interface Produto extends mongoose.Document {
   descricao: string;
   qtdUnidades: number; 
   deleted: boolean;
+  subModulo?: string
 }

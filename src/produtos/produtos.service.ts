@@ -10,17 +10,19 @@ export class ProdutosService {
     @InjectModel('produto') private readonly produtoModel: Model<Produto>,
   ) {}
 
-  async createProduto(nome: string, descricao: string) {
+  async createProduto(nome: string, descricao: string, subModulo?: string) {
     const newProduto = new this.produtoModel({
       nome: nome,
       descricao: descricao,
       deleted: false,
+      subModulo: subModulo
     })
     await newProduto.save()
     return {
       message: 'Produto criado com sucesso!'
     };
   }
+
 
   async updateProduto(_id: string, nome: string, descricao: string) {
     const updatedProduto = await this.produtoModel.findByIdAndUpdate(_id, {
@@ -63,14 +65,20 @@ export class ProdutosService {
     }
   }
 
-  async listProdutos(){
-    const produtos = await this.produtoModel.find({}).sort({createdAt: -1})
+  async listProdutos(subModulo?: string){
+    let produtos = []
+    if(subModulo){
+      produtos = await this.produtoModel.find({subModulo: subModulo}).sort({createdAt: -1})
+    }else{
+      produtos = await this.produtoModel.find({}).sort({createdAt: -1})
+    }
     const produtosMapped = produtos.map((produto: Produto) => {
       if(!produto.deleted) return {
         _id: produto._id,
         nome: produto.nome,
         qtdUnidades: produto.qtdUnidades,
         descricao: produto.descricao, 
+        subModulo: produto.subModulo
       }
     }).filter((p) => p !== undefined)
     return produtosMapped

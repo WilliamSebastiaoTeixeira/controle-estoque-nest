@@ -1,4 +1,4 @@
-import  { Body, Controller, Post, Get, UseGuards }  from '@nestjs/common'
+import  { Body, Controller, Post, Get, UseGuards, Query }  from '@nestjs/common'
 
 import { ProdutosService } from './produtos.service'
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
@@ -12,18 +12,19 @@ export class ProdutosController {
   constructor(private readonly produtosService: ProdutosService, ) {}
   
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.PRODUTOS)
+  @Roles(Role.APH, Role.LIMPEZA)
   @Post('/create')
   async createProduto(
     @Body('nome') nome: string,
     @Body('descricao') descricao: string,
+    @Body('subModulo') subModulo?: string
   ) {
-    const result = await this.produtosService.createProduto(nome, descricao)
+    const result = await this.produtosService.createProduto(nome, descricao, subModulo)
     return result
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.PRODUTOS)
+  @Roles(Role.APH, Role.LIMPEZA)
   @Post('/update')
   async updateProduto(
     @Body('_id') _id: string,
@@ -35,7 +36,7 @@ export class ProdutosController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.PRODUTOS)
+  @Roles(Role.APH, Role.LIMPEZA)
   @Post('/delete')
   async fakeDelete(
     @Body('_id') _id: string,
@@ -45,16 +46,17 @@ export class ProdutosController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.PRODUTOS)
+  @Roles(Role.APH, Role.LIMPEZA)
   @Get('/list')
-  async listProdutos(){
-    const result = await this.produtosService.listProdutos()
+  async listProdutos(
+    @Query('subModulo') subModulo?: string,
+  ){
+    const result = await this.produtosService.listProdutos(subModulo)
     return result
   }
 
-
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.PRODUTOS, Role.ENTRADA_SAIDA)
+  @Roles(Role.APH, Role.LIMPEZA, Role.ENTRADA_SAIDA)
   @Post('/list-by-param')
   async listWithParam(
     @Body('param') param: string,
@@ -64,7 +66,7 @@ export class ProdutosController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.PRODUTOS, Role.ENTRADA_SAIDA)
+  @Roles(Role.APH, Role.LIMPEZA, Role.ENTRADA_SAIDA)
   @Post('/find-by-id')
   async findById(
     @Body('_id') _id: string,

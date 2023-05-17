@@ -49,7 +49,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.MEU_PERFIL)
+  @Roles(Role.MEU_PERFIL, Role.ADMINISTRAR)
   @Post('/update-meu-perfil')
   async updateMyUser(
     @Request() req,

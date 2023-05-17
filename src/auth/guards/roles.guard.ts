@@ -18,18 +18,25 @@ export class RolesGuard implements CanActivate {
       context.getHandler(),
       context.getClass(),
     ])
+
     if (!requiredRoles) {
       return true
     }
 
-    const { user } = context.switchToHttp().getRequest()
-  
+    const { user,  query } = context.switchToHttp().getRequest()
+
+    let subModulo = true
+
+    if(query.subModulo){
+      subModulo = !!(await this.usersService.findUserByIdAndPermissions(user.userId, [query.subModulo]))
+    }
+
     const userHavePermissao = await this.usersService.findUserByIdAndPermissions(user.userId, requiredRoles)
 
-    if(!userHavePermissao) {
+    if(!userHavePermissao || !subModulo) {
       throw new UnauthorizedException('Usuário não tem permissão!')
     }
 
-    return true
+    return true 
   }
 }
