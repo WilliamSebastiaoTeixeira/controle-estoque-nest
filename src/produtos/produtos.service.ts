@@ -57,11 +57,23 @@ export class ProdutosService {
     return produto
   }
   
-  async findNaoDeletadoByIdFormated(_id: string){
+  async findNaoDeletadoByIdFormated(_id: string, usuarioId: string){
     const produto = await this.findById(_id)
     if(produto.deleted){
       throw new UnauthorizedException('Este produto não exite no banco de dados, procure o código correto!')
     }
+
+    const user = await this.usersService.findUserById(usuarioId)
+
+    const userPermission = user.permissoes.filter((permissao) => {
+      return permissao === 'APH' || 
+             permissao === 'LIMPEZA'
+    })
+
+    if(!userPermission.includes(produto.subModulo)){
+      throw new UnauthorizedException('Você não tem permissão para realizar a ação!')
+    }
+
     return {
       _id: produto._id,
       nome: produto.nome,

@@ -71,8 +71,9 @@ export class ProdutosController {
   @Post('/find-by-id')
   async findById(
     @Body('_id') _id: string,
+    @Request() req,
   ) {
-    const result = await this.produtosService.findNaoDeletadoByIdFormated(_id)
+    const result = await this.produtosService.findNaoDeletadoByIdFormated(_id, req.user.userId)
     return result
   }
 }
