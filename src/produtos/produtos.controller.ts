@@ -12,19 +12,20 @@ export class ProdutosController {
   constructor(private readonly produtosService: ProdutosService, ) {}
   
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.APH, Role.LIMPEZA)
+  @Roles(Role.APH, Role.LIMPEZA, Role.LIMPEZA, Role.DIVERSOS, Role.AQUATICO, Role.UNIFORME, Role.UNIFORME)
   @Post('/create')
   async createProduto(
+    @Request() req,
     @Body('nome') nome: string,
     @Body('descricao') descricao: string,
-    @Body('subModulo') subModulo?: string
+    @Body('subModulo') subModulo?: string,
   ) {
-    const result = await this.produtosService.createProduto(nome, descricao, subModulo)
+    const result = await this.produtosService.createProduto(nome, descricao, req.user.userId, subModulo)
     return result
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.APH, Role.LIMPEZA)
+  @Roles(Role.APH, Role.LIMPEZA, Role.LIMPEZA, Role.DIVERSOS, Role.AQUATICO, Role.UNIFORME)
   @Post('/update')
   async updateProduto(
     @Body('_id') _id: string,
@@ -36,7 +37,7 @@ export class ProdutosController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.APH, Role.LIMPEZA)
+  @Roles(Role.APH, Role.LIMPEZA, Role.LIMPEZA, Role.DIVERSOS, Role.AQUATICO, Role.UNIFORME)
   @Post('/delete')
   async fakeDelete(
     @Body('_id') _id: string,
@@ -46,7 +47,7 @@ export class ProdutosController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.APH, Role.LIMPEZA)
+  @Roles(Role.APH, Role.LIMPEZA, Role.LIMPEZA, Role.DIVERSOS, Role.AQUATICO, Role.UNIFORME)
   @Get('/list')
   async listProdutos(
     @Query('subModulo') subModulo?: string,
@@ -56,7 +57,7 @@ export class ProdutosController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.APH, Role.LIMPEZA, Role.ENTRADA_SAIDA)
+  @Roles(Role.APH, Role.LIMPEZA, Role.LIMPEZA, Role.DIVERSOS, Role.AQUATICO, Role.UNIFORME, Role.ENTRADA_SAIDA)
   @Post('/list-by-param')
   async listWithParam(
     @Body('param') param: string,
@@ -67,7 +68,7 @@ export class ProdutosController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.APH, Role.LIMPEZA, Role.ENTRADA_SAIDA)
+  @Roles(Role.APH, Role.LIMPEZA, Role.LIMPEZA, Role.DIVERSOS, Role.AQUATICO, Role.UNIFORME, Role.ENTRADA_SAIDA)
   @Post('/find-by-id')
   async findById(
     @Body('_id') _id: string,

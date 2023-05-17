@@ -15,7 +15,23 @@ export class ProdutosService {
     private readonly usersService: UsersService,
   ) {}
 
-  async createProduto(nome: string, descricao: string, subModulo?: string) {
+  async createProduto(nome: string, descricao: string, usuarioId: string, subModulo?: string ) {
+
+    const user = await this.usersService.findUserById(usuarioId)
+
+    const userPermission = user.permissoes.filter((permissao) => {
+      return permissao === 'APH' || 
+             permissao === 'LIMPEZA' ||
+             permissao === 'PROVISOES' ||
+             permissao === 'AQUATICO' ||
+             permissao === 'DIVERSOS' ||
+             permissao === 'UNIFORME'
+    })
+
+    if(!userPermission.includes(subModulo)){
+      throw new UnauthorizedException('Você não tem permissão para realizar a ação!')
+    }
+
     const newProduto = new this.produtoModel({
       nome: nome,
       descricao: descricao,
@@ -67,7 +83,11 @@ export class ProdutosService {
 
     const userPermission = user.permissoes.filter((permissao) => {
       return permissao === 'APH' || 
-             permissao === 'LIMPEZA'
+             permissao === 'LIMPEZA' ||
+             permissao === 'PROVISOES' ||
+             permissao === 'AQUATICO' ||
+             permissao === 'DIVERSOS' ||
+             permissao === 'UNIFORME'
     })
 
     if(!userPermission.includes(produto.subModulo)){
@@ -118,7 +138,11 @@ export class ProdutosService {
 
     const userPermission = user.permissoes.filter((permissao) => {
       return permissao === 'APH' || 
-             permissao === 'LIMPEZA'
+             permissao === 'LIMPEZA' ||
+             permissao === 'PROVISOES' ||
+             permissao === 'AQUATICO' ||
+             permissao === 'DIVERSOS' ||
+             permissao === 'UNIFORME'
     })
 
     const produtosMapped = produtos

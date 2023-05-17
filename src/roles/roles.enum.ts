@@ -3,7 +3,12 @@ export enum Role {
   ADMINISTRAR = 'ADMINISTRAR',
   ENTRADA_SAIDA = 'ENTRADA_SAIDA',
   APH = 'APH',
-  LIMPEZA = 'LIMPEZA'
+  PROVISOES = 'PROVISOES',
+  AQUATICO = 'AQUATICO',
+  LIMPEZA = 'LIMPEZA',
+  UNIFORME = 'UNIFORME',
+  DIVERSOS = 'DIVERSOS',
+
 }
 
 export enum RoleLabel {
@@ -11,5 +16,9 @@ export enum RoleLabel {
   ADMINISTRAR = 'Criar/Editar usuarios',
   ENTRADA_SAIDA = 'Registros',
   APH = 'APH',
-  LIMPEZA = 'Limpeza'
+  PROVISOES = 'Provisões',
+  AQUATICO = 'Aquatico',
+  LIMPEZA = 'Limpeza',
+  UNIFORME = 'Uniforme',
+  DIVERSOS = 'Diversos',
 }
