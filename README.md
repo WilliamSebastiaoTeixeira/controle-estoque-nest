@@ -5,17 +5,45 @@ Controle de estoque backend - NestJS
 ## Installation
 
 ```bash
-$ yarn install
+$ yarn
 ```
+
+## MongoDB config
+
+```json
+{
+  "nome": "Administrador",
+  "username": "administrador@controle-estoque.com",
+  "password": "$2b$10$31fJzkv7PfY6IMZNex9lv.GPyx9eRLOQx2BHaaHg2gOqkBchnoAUO",
+  "deleted": false,
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1680384977649"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1685122380443"
+    }
+  },
+  "__v": 0,
+  "permissoes": [
+    "MEU_PERFIL",
+    "ADMINISTRAR",
+    "ENTRADA_SAIDA",
+    "APH",
+    "PROVISOES",
+    "AQUATICO",
+    "LIMPEZA",
+    "UNIFORME",
+    "DIVERSOS"
+  ]
+}
+```
+
 ## Running the app
 
 ```bash
 # development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+$ yarn start:dev
 ```
