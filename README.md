@@ -11,6 +11,7 @@ $ yarn
 ## MongoDB config
 
 ```json
+# insert a new user in user collection
 {
   "nome": "Administrador",
   "username": "administrador@controle-estoque.com",
