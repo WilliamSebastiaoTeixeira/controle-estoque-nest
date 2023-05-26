@@ -13,7 +13,7 @@ export enum Role {
 
 export enum RoleLabel {
   MEU_PERFIL = 'Meu perfil',
-  ADMINISTRAR = 'Criar/Editar usuarios',
+  ADMINISTRAR = 'Criar/Editar usuários',
   ENTRADA_SAIDA = 'Registros',
   APH = 'APH',
   PROVISOES = 'Provisões',
