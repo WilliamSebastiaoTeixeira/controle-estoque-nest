@@ -13,8 +13,11 @@ $ yarn
 ```json
 # insert a new user in user collection
 {
-  "nome": "Administrador",
-  "username": "administrador@controle-estoque.com",
+  "_id": {
+    "$oid": "6428a3d154224b3ab444d4ca"
+  },
+  "nome": "teste 1",
+  "username": "teste@teste.com",
   "password": "$2b$10$31fJzkv7PfY6IMZNex9lv.GPyx9eRLOQx2BHaaHg2gOqkBchnoAUO",
   "deleted": false,
   "createdAt": {
